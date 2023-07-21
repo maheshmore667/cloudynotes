@@ -1,14 +1,23 @@
 const mongoose = require('mongoose');
-const mongoURI ="mongodb://localhost:27017";
+const mongoURI ="mongodb://127.0.0.1:27017/";
 
 const connectToMongo = () =>{
     //deprectaion warning
     mongoose.set('strictQuery', true);
 
     //connection to the mongodb
-    mongoose.connect(mongoURI, ()=>{
-        console.log("Connected to mongo Mahesh");
-    });
+    mongoose.connect(mongoURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => {
+        console.log('Connected to MongoDB successfully!');
+      })
+      .catch((error) => {
+        console.error('Error connecting to MongoDB:', error);
+      });
 }
+
+
 
 module.exports = connectToMongo;
