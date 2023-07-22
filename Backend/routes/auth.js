@@ -3,7 +3,7 @@ const router = express?.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 
-//validation layer added 
+//validation layer added
 router.post(
   "/createUser",
   body("email", "please enter a valid email").isEmail(),
@@ -12,11 +12,20 @@ router.post(
   (req, res) => {
     try {
       console.log(req.body);
-      const user = new User(req.body);
       const result = validationResult(req);
       if (result.isEmpty()) {
-        user.save();
-        res.send({ status: 200, description: "SuccessFul" });
+        User.create({
+          name: req?.body?.name,
+          password: req?.body?.password,
+          email: req?.body?.email,
+        })
+          .then((response) => {
+            res.send({ status: 200, description: "SuccessFul" });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).json(error);
+          });
       } else {
         res.send({ description: "invalid payload", errors: result.array() });
       }
