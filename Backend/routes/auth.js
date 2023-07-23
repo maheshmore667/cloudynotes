@@ -3,6 +3,7 @@ const router = express?.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //validation layer added
 router.post(
@@ -25,13 +26,19 @@ router.post(
           //securing the password using hashing and other bcyprt password to bypass 
           //cybersecurity attack
           var secPassword = await bcrypt.hash(req?.body?.password ,await bcrypt.genSalt(10));
+          const data = {
+            user: {
+              id : User?.id
+            }
+          }
+          const authToken = jwt?.sign(data, "Cl@udYNote$");
           User.create({
             name: req?.body?.name,
             password: secPassword,
             email: req?.body?.email,
           })
             .then((response) => {
-              res.send({ status: 200, description: "SuccessFul" });
+              res.send({ status: 200, description: "SuccessFul", authToken});
             })
             .catch((error) => {
               console.log(error);
