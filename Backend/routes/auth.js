@@ -2,6 +2,7 @@ const express = require("express");
 const router = express?.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
+const bcrypt = require('bcrypt');
 
 //validation layer added
 router.post(
@@ -21,9 +22,12 @@ router.post(
             .status(400)
             .send({ description: "User already exist with the email" });
         } else {
+          //securing the password using hashing and other bcyprt password to bypass 
+          //cybersecurity attack
+          var secPassword = await bcrypt.hash(req?.body?.password ,await bcrypt.genSalt(10));
           User.create({
             name: req?.body?.name,
-            password: req?.body?.password,
+            password: secPassword,
             email: req?.body?.email,
           })
             .then((response) => {
