@@ -101,4 +101,24 @@ router.put("/updatenote/:id", getUserData, async (req, res) => {
   }
 });
 
+//API 4 : Delete a note
+router.delete("/deletenote/:id", getUserData, async (req, res) =>{
+
+  try{
+    //find if the note present in the DB
+    const notePresent = await Notes.findById(req.params.id);
+    if(!notePresent){ return res.status(404).send({description : "Note not found"})}
+    
+    //checking if user is deleting his own note
+    if(req.id != notePresent.user.toString()){return res.status(401).send({description : "Access Denied!!"})}
+
+    //deleting the note
+    const deletedNote = await Notes.findByIdAndDelete(req.params.id);
+    return res.status(200).send({description : "Note deleted successfully", note : deletedNote});
+  } catch(error) {
+    res.status(500).send({description : "Internal server error"});
+  }
+
+});
+
 module.exports = router;
