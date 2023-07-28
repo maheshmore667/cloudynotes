@@ -8,6 +8,7 @@ import NoteState from "./context/notes/noteState";
 function App() {
   return (
     <>
+    <div className="container">
       <NoteState>
         <Router>
           <Navlist />
@@ -19,6 +20,7 @@ function App() {
           </Route>
         </Router>
       </NoteState>
+      </div>
     </>
   );
 }
