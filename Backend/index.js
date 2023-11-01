@@ -3,7 +3,7 @@ const express = require('express');
 
 const app = express();
 
-const port = 3000;
+const port = 4000;
 
 //middleware to use requets body
 app.use(express.json());
