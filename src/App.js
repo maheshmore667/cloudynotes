@@ -8,7 +8,7 @@ import NoteState from "./context/notes/noteState";
 function App() {
   return (
     <>
-    <div className="container">
+    <div className="container-fluid">
       <NoteState>
         <Router>
           <Navlist />
