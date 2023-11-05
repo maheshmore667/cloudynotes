@@ -6,7 +6,12 @@ const Notesitem = (props) => {
     <>
       <div className="card col-md-3 mx-1 my-2">
         <div className="card-body ">
-          <h5 className="card-title">{notes.title}</h5>
+          <div className="d-flex align-items-center">
+            <h5 className="card-title mx-2">{notes.title}</h5> 
+            <i class="fa-solid fa-trash mx-2"></i>
+            <i class="fa-regular fa-pen-to-square mx-2"></i>
+          </div>
+         
           <p className="card-text">
             {notes.description}
           </p>
