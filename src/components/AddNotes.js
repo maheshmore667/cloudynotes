@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import noteContext from '../context/notes/noteContext'
 
 const AddNotes = () => {
+    const [note, setNote] = useState({title: "", tag : "default", description:""})
+    const {addNote} = useContext(noteContext)
+
+    const callAddNote = (e) =>{
+        e.preventDefault();
+        addNote(note.tag, note.description, note.title);
+    }
+    const handleChange =(e) =>{
+        setNote({...note, [e.target.name] : e.target.value})
+    }
+
   return (
     <div className="my-3">
         <h2>Add a Note</h2>
@@ -14,6 +26,7 @@ const AddNotes = () => {
               name="title"
               aria-describedby="Note Title"
               placeholder="Enter title of the note"
+              onChange={handleChange}
             ></input>
           </div>
           <div className="form-group my-3">
@@ -25,9 +38,10 @@ const AddNotes = () => {
               name="description"
               aria-describedby="Note Description"
               placeholder="description"
+              onChange={handleChange}
             ></input>
           </div>
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={callAddNote}>
             Add Note
           </button>
         </form>
