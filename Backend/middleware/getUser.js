@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 const getUserData =(req, res, next) =>{
-    const token = JSON.parse(req?.header('auth-token'));
+    //const token = JSON.parse(req?.header('auth-token'));
+    const token = req?.header('auth-token');
+    
     if(!token){
         //401 : Access denied
         return res.status(401).send({description : "Invalid Token"})

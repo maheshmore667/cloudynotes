@@ -2,50 +2,24 @@ import { useState } from "react";
 import NoteContext from "./noteContext"
 
 const NoteState =(props) => {
-    const initialNotes =[
-        {
-          "_id": "64bff480a473e7e4ce06531a",
-          "user": "64be6e46af3c79580332b03d",
-          "title": "React Learning",
-          "description": "For switch the react hands on is important",
-          "tag": "Im",
-          "author": "Mahesh More",
-          "date": "2023-07-25T16:12:48.921Z",
-          "__v": 0
-        },
-        {
-          "_id": "64bff482a473e7e4sdace06531c",
-          "user": "64be6e46af3c79580332b03d",
-          "title": "React Learning",
-          "description": "For switch the react hands on is important",
-          "tag": "Im",
-          "author": "Mahesh More",
-          "date": "2023-07-25T16:12:50.706Z",
-          "__v": 0
-        }
-        ,
-        {
-          "_id": "64bff482a473e7e4ce06531c",
-          "user": "64be6e46af3c79580332b03d",
-          "title": "React Learning",
-          "description": "For switch the react hands on is important",
-          "tag": "Im",
-          "author": "Mahesh More",
-          "date": "2023-07-25T16:12:50.706Z",
-          "__v": 0
-        } ,
-        {
-          "_id": "64bff482a473e7e4ce06fsd531c",
-          "user": "64be6e46af3c79580332b03d",
-          "title": "React Learning",
-          "description": "For switch the react hands on is important",
-          "tag": "Im",
-          "author": "Mahesh More",
-          "date": "2023-07-25T16:12:50.706Z",
-          "__v": 0
-        }
-      ];
-      const [notes, setNote] = useState(initialNotes);
+    const initialNotes = []
+    const [notes, setNote] = useState(initialNotes)
+   
+
+      //fetch all notes
+      const fetchNote = async() =>{
+        const host = "http://localhost:4000"
+        //auth token mocked for now
+        const responseAll = await fetch(`${host}/api/notes/fetchallnotes`, {
+          method : 'GET',
+          headers : {
+            "Content-Type": "application/json",
+            "auth-token": "eyJhbGciOiJIUzI1NiJ9.NjRiZTZlNDZhZjNjNzk1ODAzMzJiMDNk.mu3wD9HnJ6Y7oEScyvFykKn-wDV2vBj7XauRCvVTouU"
+          }
+        })
+        const fetchedData = await responseAll.json();
+        setNote(fetchedData.notes);
+      }
 
       //Add the note
       const addNote = (tag, description, title) =>{
@@ -72,7 +46,7 @@ const NoteState =(props) => {
         setNote(newNotes);
       }
     return(
-        <NoteContext.Provider value={{notes, addNote, deleteNote}}>
+        <NoteContext.Provider value={{notes, addNote, deleteNote, fetchNote}}>
             {props.children}
         </NoteContext.Provider>
     )
