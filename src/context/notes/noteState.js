@@ -58,8 +58,30 @@ const NoteState =(props) => {
         })
         setNote(newNotes);
       }
+
+      //edit the note 
+      const editNote = async(editedNote) =>{
+        const host = "http://localhost:4000"
+        //auth token mocked for now
+         await fetch(`${host}/api/notes/updatenote/${editedNote._id}`, {
+          method : 'PUT',
+          headers : {
+            "Content-Type": "application/json",
+            "auth-token": "eyJhbGciOiJIUzI1NiJ9.NjRiZTZlNDZhZjNjNzk1ODAzMzJiMDNk.mu3wD9HnJ6Y7oEScyvFykKn-wDV2vBj7XauRCvVTouU"
+          },
+          body:  JSON.stringify({
+            "title": editedNote.title,
+            "description": editedNote.description,
+            "tag": editedNote.tag,
+            "author": editedNote.author,
+          })
+        })
+        fetchNote()
+
+      }
+
     return(
-        <NoteContext.Provider value={{notes, addNote, deleteNote, fetchNote}}>
+        <NoteContext.Provider value={{notes, addNote, deleteNote, fetchNote, editNote}}>
             {props.children}
         </NoteContext.Provider>
     )

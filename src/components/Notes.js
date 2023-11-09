@@ -1,26 +1,41 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import Notesitem from "./Notesitem";
 import AddNotes from "./AddNotes";
 
 const Notes = () => {
-  const { notes, fetchNote } = useContext(noteContext);
+  const { notes, fetchNote, editNote } = useContext(noteContext);
+  const [currentNote, setCurrentNote] =  useState({tag:"", description:"", title:""})
   useEffect(() => {
     fetchNote(); // eslint-disable-next-line
   }, []);
-  
+
+  const openModal = (noteToBeEditied) =>{
+    const modalOpener = document.getElementById("exampleModalButton");
+    modalOpener.click();
+    setCurrentNote(noteToBeEditied)
+  }
+
+  const inputChangeHandle =(e) =>{
+    setCurrentNote({...currentNote, [e.target.name] : e.target.value})
+  }
+
+  const saveEditedChanges =() =>{
+    editNote(currentNote)
+  }
+
   return (
     <div className="container my-3">
       <AddNotes />
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-primary d-none"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
+        id="exampleModalButton"
       >
         Launch demo modal
       </button>
-
       <div
         className="modal fade"
         id="exampleModal"
@@ -52,6 +67,8 @@ const Notes = () => {
                     className="form-control"
                     id="title"
                     name="title"
+                    value={currentNote.title}
+                    onChange={inputChangeHandle}
                     aria-describedby="Note Title"
                     placeholder="Enter title of the note"
                   ></input>
@@ -65,6 +82,8 @@ const Notes = () => {
                     className="form-control"
                     id="description"
                     name="description"
+                    value={currentNote.description}
+                    onChange={inputChangeHandle}
                     aria-describedby="Note Description"
                     placeholder="description"
                   ></input>
@@ -78,6 +97,8 @@ const Notes = () => {
                     className="form-control"
                     id="tag"
                     name="tag"
+                    value={currentNote.tag}
+                    onChange={inputChangeHandle}
                     aria-describedby="Note Tag"
                     placeholder="tag"
                   ></input>
@@ -92,7 +113,7 @@ const Notes = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button type="button" data-bs-dismiss="modal" className="btn btn-primary" onClick={saveEditedChanges}>
                 Save changes
               </button>
             </div>
@@ -101,7 +122,7 @@ const Notes = () => {
       </div>
       <div className="row d-flex justify-content-center">
         {notes?.map((note) => {
-          return <Notesitem key={note._id} notes={note} />;
+          return <Notesitem key={note._id} openModal={openModal} notes={note} />;
         })}
       </div>
     </div>

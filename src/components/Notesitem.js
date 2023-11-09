@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
 
 const Notesitem = (props) => {
-  const { notes } = props;
+  const { notes, openModal } = props;
   const { deleteNote } = useContext(noteContext);
   return (
     <>
@@ -17,7 +17,7 @@ const Notesitem = (props) => {
                 deleteNote(notes._id);
               }}
             ></i>
-            <i className="fa-regular fa-pen-to-square mx-2"></i>
+            <i className="fa-regular fa-pen-to-square mx-2" onClick={()=>{openModal(notes)}}></i>
           </div>
 
           <p className="card-text">{notes.description}</p>
