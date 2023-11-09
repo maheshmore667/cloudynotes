@@ -6,8 +6,8 @@ import AddNotes from './AddNotes';
 const Notes = () => {
  const { notes, fetchNote } = useContext(noteContext);
  useEffect(()=>{
-  fetchNote(); 
- },[fetchNote])
+  fetchNote(); // eslint-disable-next-line
+ },[])
   return (
     <div className="container my-3">
       <AddNotes/>
