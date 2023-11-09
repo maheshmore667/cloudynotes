@@ -18,7 +18,7 @@ const AddNotes = () => {
         <h2>Add a Note</h2>
         <form className="my-3">
           <div className="form-group my-3">
-            <label htmlFor="title">Note Title</label>
+            <label className="mb-2" htmlFor="title">Note Title</label>
             <input
               type="text"
               className="form-control"
@@ -30,7 +30,7 @@ const AddNotes = () => {
             ></input>
           </div>
           <div className="form-group my-3">
-            <label htmlFor="description">Description</label>
+            <label className="mb-2" htmlFor="description">Description</label>
             <input
               type="text"
               className="form-control"
@@ -38,6 +38,18 @@ const AddNotes = () => {
               name="description"
               aria-describedby="Note Description"
               placeholder="description"
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="form-group my-3">
+            <label className="mb-2" htmlFor="tag">Tag</label>
+            <input
+              type="text"
+              className="form-control"
+              id="tag"
+              name="tag"
+              aria-describedby="Note Tag"
+              placeholder="tag"
               onChange={handleChange}
             ></input>
           </div>
