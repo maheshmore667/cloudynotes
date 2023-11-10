@@ -1,14 +1,28 @@
 import React, { useState } from "react";
 
 const Login = () => {
-  const [creds, setCreds] = useState({ email: "", password: "", name: "" })
-  const handleInput= (e) =>{
-    setCreds({...creds, [e.target.name] : e.target.value});
-  }
-  const handleSubmit = (e) =>{
-    e.preventDefault()
+  const [creds, setCreds] = useState({ email: "", password: "", name: "" });
+  const handleInput = (e) => {
+    setCreds({ ...creds, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(creds);
-  }
+    submitDetails();
+  };
+
+  const submitDetails = async() => {
+    const response = await fetch("http://localhost:4000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(creds),
+    });
+    const details = await response.json();
+    console.log("details : ", details);
+  };
 
   return (
     <div
@@ -24,7 +38,7 @@ const Login = () => {
           className="d-flex flex-column justify-content-center align-items-center"
           onSubmit={handleSubmit}
         >
-          <h3 >CloudyNotes</h3>
+          <h3>CloudyNotes</h3>
 
           <div className="form-group col-md-10 mb-4">
             <b>
