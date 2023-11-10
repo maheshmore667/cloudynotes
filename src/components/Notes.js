@@ -120,7 +120,12 @@ const Notes = () => {
           </div>
         </div>
       </div>
-      <div className="row d-flex justify-content-center">
+      <div className="container row d-flex justify-content-center">
+        <div className="container"> 
+         { notes?.length === 0 &&
+          <h4>Nothing to show here</h4>
+         }
+        </div>
         {notes?.map((note) => {
           return <Notesitem key={note._id} openModal={openModal} notes={note} />;
         })}
