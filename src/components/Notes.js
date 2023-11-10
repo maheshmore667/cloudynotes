@@ -66,7 +66,7 @@ const Notes = () => {
                     type="text"
                     className="form-control"
                     id="title"
-                    name="title"
+                    name="title" 
                     value={currentNote.title}
                     onChange={inputChangeHandle}
                     aria-describedby="Note Title"
@@ -81,7 +81,7 @@ const Notes = () => {
                     type="text"
                     className="form-control"
                     id="description"
-                    name="description"
+                    name="description" 
                     value={currentNote.description}
                     onChange={inputChangeHandle}
                     aria-describedby="Note Description"
@@ -113,7 +113,7 @@ const Notes = () => {
               >
                 Close
               </button>
-              <button type="button" data-bs-dismiss="modal" className="btn btn-primary" onClick={saveEditedChanges}>
+              <button type="button" disabled={currentNote?.title?.length >0 && !currentNote?.tag?.length >0 && currentNote?.description?.length >0} data-bs-dismiss="modal" className="btn btn-primary" onClick={saveEditedChanges}>
                 Save changes
               </button>
             </div>
