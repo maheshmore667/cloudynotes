@@ -25,7 +25,7 @@ const Navlist = () => {
             <Link className={`nav-link ${location?.pathname === "/About" ? "active" : ""}`} to="/About">About</Link>
           </li>
         </ul>
-        <Link to="/" className="btn btn-primary mx-1"  role="button" aria-disabled="true">Login</Link>
+        <Link to="/Login" className="btn btn-primary mx-1"  role="button" aria-disabled="true">Login</Link>
         <Link to="/" className="btn btn-primary mx-1"  role="button" aria-disabled="true">Sign up</Link>
       </div>
     </div>

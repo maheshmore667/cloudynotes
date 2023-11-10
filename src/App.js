@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import NoteState from "./context/notes/noteState";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           </Route>
           <Route exact path="/About">
             <About />
+          </Route>
+          <Route exact path="/Login">
+            <Login />
           </Route>
         </Router>
       </NoteState>
