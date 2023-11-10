@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import {useHistory} from "react-router-dom";
 
 const Login = () => {
   const [creds, setCreds] = useState({ email: "", password: "", name: "" });
+  const history = useHistory();
   const handleInput = (e) => {
     setCreds({ ...creds, [e.target.name]: e.target.value });
   };
@@ -12,16 +14,25 @@ const Login = () => {
     submitDetails();
   };
 
-  const submitDetails = async() => {
-    const response = await fetch("http://localhost:4000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(creds),
-    });
-    const details = await response.json();
-    console.log("details : ", details);
+  const submitDetails = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(creds),
+      });
+      const details = await response.json();
+      if(details?.authToken) {
+        localStorage.setItem('authToken', details?.authToken);
+        history.push('/')
+      } else {
+        alert("Wrong Details")
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
