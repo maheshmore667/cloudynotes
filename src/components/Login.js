@@ -10,11 +10,13 @@ const Login = () => {
   };
   var [pageName, setPageName] = useState("");
   const location = useLocation();
+  var[url,setUrl] = useState("");
 
   useEffect(()=>{
     const queryParams = new URLSearchParams(location.search);
     setPageName(queryParams.get('functionality')); 
-  },[location.search])
+    pageName.toLowerCase() === "login" ? setUrl("http://localhost:4000/api/auth/login") : setUrl("http://localhost:4000/api/auth/createUser");
+  },[location.search, pageName])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ const Login = () => {
 
   const submitDetails = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/auth/login", {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +92,7 @@ const Login = () => {
               onChange={handleInput}
             />
           </div>
-          <div className="form-group col-md-10 mb-5">
+          { pageName?.toLowerCase() === "signup" && <div className="form-group col-md-10 mb-5">
             <b>
               <label htmlFor="name" className="mb-1">
                 Name
@@ -104,7 +106,7 @@ const Login = () => {
               placeholder="name"
               onChange={handleInput}
             />
-          </div>
+          </div> }
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
