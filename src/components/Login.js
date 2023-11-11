@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useHistory} from "react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const Login = () => {
   const [creds, setCreds] = useState({ email: "", password: "", name: "" });
@@ -7,7 +8,11 @@ const Login = () => {
   const handleInput = (e) => {
     setCreds({ ...creds, [e.target.name]: e.target.value });
   };
-
+  const location = useLocation();
+  useEffect(()=>{
+    const queryParams = new URLSearchParams(location.search);
+    console.log(queryParams.get('functionality')); 
+  },[location.search])
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(creds);
