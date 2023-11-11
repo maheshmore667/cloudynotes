@@ -8,11 +8,14 @@ const Login = () => {
   const handleInput = (e) => {
     setCreds({ ...creds, [e.target.name]: e.target.value });
   };
+  var [pageName, setPageName] = useState("");
   const location = useLocation();
+
   useEffect(()=>{
     const queryParams = new URLSearchParams(location.search);
-    console.log(queryParams.get('functionality')); 
+    setPageName(queryParams.get('functionality')); 
   },[location.search])
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(creds);
@@ -54,7 +57,7 @@ const Login = () => {
           className="d-flex flex-column justify-content-center align-items-center"
           onSubmit={handleSubmit}
         >
-          <h3>CloudyNotes</h3>
+          <h3>CloudyNotes {pageName}</h3>
 
           <div className="form-group col-md-10 mb-4">
             <b>
