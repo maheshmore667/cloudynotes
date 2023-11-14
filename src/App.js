@@ -5,14 +5,17 @@ import Home from "./components/Home";
 import About from "./components/About";
 import NoteState from "./context/notes/noteState";
 import Login from "./components/Login";
+import Alert from "./components/Alert";
 
 function App() {
   return (
     <>
     <div className="container-fluid">
+     
       <NoteState>
         <Router>
           <Navlist />
+          <Alert />
           <Route exact path="/">
             <Home />
           </Route>
