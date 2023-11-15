@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import {useHistory} from "react-router-dom";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import alertContext from "../context/alert/alertContext";
 
 const Login = () => {
   const [creds, setCreds] = useState({ email: "", password: "", name: "" });
+  const {setAlertConfig} = useContext(alertContext)
   const history = useHistory();
   const handleInput = (e) => {
     setCreds({ ...creds, [e.target.name]: e.target.value });
@@ -36,6 +38,19 @@ const Login = () => {
       const details = await response.json();
       if(details?.authToken) {
         localStorage.setItem('authToken', details?.authToken);
+        setAlertConfig({
+          message: `${pageName} is success!!`,
+          state: "success",
+          show: true
+        },
+        setTimeout(() => {
+          setAlertConfig( {
+            message: null,
+            state: null,
+            show: false
+          }); 
+        }, 1500)
+        )
         history.push('/')
       } else {
         alert("Wrong Details")
