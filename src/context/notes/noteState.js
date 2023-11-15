@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import NoteContext from "./noteContext"
+import alertContext from "../alert/alertContext";
 
 const NoteState =(props) => {
     const initialNotes = []
     const [notes, setNote] = useState(initialNotes)
-   
+    const {setAlertConfig} = useContext(alertContext)
+    
 
       //fetch all notes
       const fetchNote = async() =>{
@@ -39,6 +41,19 @@ const NoteState =(props) => {
             })
           })
           const noteToBeSaved = await response.json();
+          setAlertConfig({
+            message: "Note is added successfully!!",
+            state: "success",
+            show: true
+          },
+          setTimeout(() => {
+            setAlertConfig( {
+              message: null,
+              state: null,
+              show: false
+            }); 
+          }, 1500)
+          )
           setNote(notes.concat(noteToBeSaved.note))
       }
 
@@ -57,6 +72,19 @@ const NoteState =(props) => {
           return note._id !== id;
         })
         setNote(newNotes);
+        setAlertConfig({
+          message: "Note is deleted successfully!!",
+          state: "success",
+          show: true
+        },
+        setTimeout(() => {
+          setAlertConfig( {
+            message: null,
+            state: null,
+            show: false
+          }); 
+        }, 1500)
+        )
       }
 
       //edit the note 
@@ -77,6 +105,19 @@ const NoteState =(props) => {
           })
         })
         fetchNote()
+        setAlertConfig({
+          message: "Note is saved successfully!!",
+          state: "success",
+          show: true
+        },
+        setTimeout(() => {
+          setAlertConfig( {
+            message: null,
+            state: null,
+            show: false
+          }); 
+        }, 1500)
+        )
 
       }
 
