@@ -2,12 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import Notesitem from "./Notesitem";
 import AddNotes from "./AddNotes";
+import {useLocation} from "react-router-dom";
+
 
 const Notes = () => {
   const { notes, fetchNote, editNote } = useContext(noteContext);
   const [currentNote, setCurrentNote] =  useState({tag:"", description:"", title:""})
+  const location = useLocation();
+  var [pageName, setPageName] = useState("");
+  
   useEffect(() => {
-    fetchNote(); // eslint-disable-next-line
+    const queryParams = new URLSearchParams(location.search); 
+    setPageName(queryParams.get('functionality'));  
+    if(pageName.toLowerCase() === "login") {  
+      fetchNote(); 
+    } 
+    // eslint-disable-next-line
   }, []);
 
   const openModal = (noteToBeEditied) =>{

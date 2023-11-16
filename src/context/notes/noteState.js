@@ -16,7 +16,7 @@ const NoteState =(props) => {
           method : 'GET',
           headers : {
             "Content-Type": "application/json",
-            "auth-token": "eyJhbGciOiJIUzI1NiJ9.NjRiZTZlNDZhZjNjNzk1ODAzMzJiMDNk.mu3wD9HnJ6Y7oEScyvFykKn-wDV2vBj7XauRCvVTouU"
+            "auth-token": localStorage.getItem("authToken")
           }
         })
         const fetchedData = await responseAll.json();
@@ -31,7 +31,7 @@ const NoteState =(props) => {
             method : 'POST',
             headers : {
               "Content-Type": "application/json",
-              "auth-token": "eyJhbGciOiJIUzI1NiJ9.NjRiZTZlNDZhZjNjNzk1ODAzMzJiMDNk.mu3wD9HnJ6Y7oEScyvFykKn-wDV2vBj7XauRCvVTouU"
+              "auth-token": localStorage.getItem("authToken")
             },
             body:  JSON.stringify({
               "title": title,
@@ -65,7 +65,7 @@ const NoteState =(props) => {
           method : 'DELETE',
           headers : {
             "Content-Type": "application/json",
-            "auth-token": "eyJhbGciOiJIUzI1NiJ9.NjRiZTZlNDZhZjNjNzk1ODAzMzJiMDNk.mu3wD9HnJ6Y7oEScyvFykKn-wDV2vBj7XauRCvVTouU"
+            "auth-token": localStorage.getItem("authToken")
           }
         })
         const newNotes = notes.filter((note)=>{
@@ -95,7 +95,7 @@ const NoteState =(props) => {
           method : 'PUT',
           headers : {
             "Content-Type": "application/json",
-            "auth-token": "eyJhbGciOiJIUzI1NiJ9.NjRiZTZlNDZhZjNjNzk1ODAzMzJiMDNk.mu3wD9HnJ6Y7oEScyvFykKn-wDV2vBj7XauRCvVTouU"
+            "auth-token": localStorage.getItem("authToken")
           },
           body:  JSON.stringify({
             "title": editedNote.title,
